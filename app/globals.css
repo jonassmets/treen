@@ -104,16 +104,22 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* Reset global rhythm for mobile screens */
+  :root {
+    --mobile-side-padding: clamp(20px, 6vw, 28px);
+  }
+
   body {
-    font-size: 16px;
-    line-height: 1.58;
+    background-color: #ffffff !important;
+    font-size: 1rem;
+    line-height: 1.4;
     scroll-snap-type: none;
     overflow-x: hidden;
   }
 
   main {
-    font-size: clamp(1rem, 2.4vw, 1.125rem);
+    font-size: 1rem !important;
+    background-color: #ffffff;
+    overflow-x: hidden;
   }
 
   img,
@@ -122,238 +128,221 @@ body {
     height: auto;
   }
 
-  /* Stack hero content vertically with even breathing room */
+  .hero-section,
+  .profile-section,
+  .contact-section,
+  .site-footer {
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+    padding-inline: var(--mobile-side-padding);
+  }
+
+  .hero-shell,
+  .profile-section > div,
+  .contact-section > div,
+  .site-footer > div {
+    padding-inline: 0 !important;
+  }
+
   .hero-section {
     min-height: auto !important;
     height: auto !important;
-    padding: 56px 0 28px;
+    padding: calc(env(safe-area-inset-top, 0px) + 38px) 0 28px;
     align-items: flex-start;
   }
 
   .hero-shell {
     height: auto;
     justify-content: flex-start;
-    gap: 28px;
+    gap: 20px;
   }
 
-  .hero-shell h1 {
-    font-size: clamp(2rem, 7vw, 2.5rem);
-    line-height: 1.25;
-    margin-bottom: 16px;
-    max-width: 18ch;
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 2.5rem) !important;
+    line-height: 1.3 !important;
+    margin-bottom: 14px !important;
+    max-width: 20ch;
+    text-align: left;
   }
 
   .hero-grid {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 22px;
+  }
+
+  .hero-grid > div {
+    max-width: 52ch;
   }
 
   .hero-grid p {
-    font-size: clamp(1rem, 3.3vw, 1.1rem);
-    line-height: 1.6;
-    max-width: 46ch;
+    font-size: clamp(1rem, 3vw, 1.06rem);
+    line-height: 1.42;
     color: #4d4d4d;
   }
 
-  /* Hide the standalone signature so we can reintroduce it over the portrait */
+  .hero-grid .space-y-8 > * + * {
+    margin-top: 1.4rem;
+  }
+
   .signature-container {
     display: none;
   }
 
-  /* Profile block stacks and centers everything */
   .profile-section {
     min-height: auto !important;
-    padding: 24px 0 88px;
+    padding: 16px 0 60px;
+  }
+
+  .profile-photo-wrapper {
+    display: none;
   }
 
   .profile-stack {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 36px;
+    align-items: flex-start;
+    text-align: left;
+    gap: 24px;
+  }
+
+  .profile-stack .flex-1 {
+    width: 100%;
+    max-width: 52ch;
+    padding-inline: 0;
+  }
+
+  .profile-stack .flex-1 a {
+    justify-content: flex-start;
   }
 
   .profile-stack h2 {
-    font-size: clamp(1.8rem, 5.8vw, 2.3rem);
-    line-height: 1.2;
+    font-size: clamp(1.65rem, 4.6vw, 1.9rem);
+    margin-top: 24px;
+    line-height: 1.25;
   }
 
   .profile-stack p,
   .profile-stack a,
   .profile-stack .text-gray-600 {
-    font-size: clamp(0.95rem, 3.2vw, 1.05rem);
-    line-height: 1.55;
+    font-size: clamp(0.98rem, 3vw, 1.05rem);
+    line-height: 1.3;
   }
 
-  .profile-stack .flex-1 {
-    width: 100%;
-    text-align: center;
-  }
-
-  .profile-stack .flex-1 a {
-    justify-content: center;
-  }
-
-  /* Portrait fills the viewport width and hosts the signature overlay */
-  .profile-photo-wrapper {
-    position: relative;
-    width: 90vw;
-    max-width: 380px;
-    margin: 0 auto;
-    border-radius: 40px;
-    overflow: hidden;
-  }
-
-  .profile-photo-wrapper img {
-    width: 100% !important;
-    height: auto !important;
-    border-radius: 40px;
-    display: block;
-  }
-
-  .profile-photo-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 5%;
-    right: 6%;
-    width: min(60%, 210px);
-    aspect-ratio: 256 / 120;
-    background-image: url('/signature.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .profile-stack a {
-    display: inline-flex;
-    align-items: center;
-    margin: 0 auto;
-  }
-
-  /* Refresh collage container for mobile animation */
-  .float-collage {
-    margin-top: 8px;
-    height: 120vh;
-    padding: 32px 0 120px;
-  }
-
-  .float-item {
-    opacity: 0.95;
-    width: clamp(180px, 60vw, 280px);
-  }
-
-  .float-media {
-    border-radius: 20px;
+  .profile-stack .space-y-2 > * + * {
+    margin-top: 0.4rem;
   }
 
   .contact-section {
     min-height: auto !important;
     margin-top: 0;
-    padding: 48px 0 96px;
+    padding: 32px 0 64px;
+    background-color: #ffffff;
   }
 
   .contact-title {
-    font-size: clamp(2rem, 6vw, 2.4rem);
-    line-height: 1.2;
-    margin-bottom: 32px !important;
+    font-size: clamp(1.65rem, 4.8vw, 2rem) !important;
+    line-height: 1.25 !important;
+    margin-bottom: 18px !important;
+    max-width: 52ch;
   }
 
   .contact-form {
-    font-size: clamp(0.95rem, 3vw, 1.05rem);
-    line-height: 1.55;
+    font-size: 1rem;
+    line-height: 1.4;
+    max-width: 52ch;
   }
 
   .contact-grid {
-    gap: 20px;
+    gap: 14px;
   }
 
   .contact-form input,
   .contact-form textarea {
     font-size: inherit;
     border-radius: 32px;
-    padding: 14px 18px;
+    padding: 12px 14px;
   }
 
   .contact-form textarea {
-    min-height: 180px;
+    min-height: 170px;
   }
 
   .contact-submit {
     width: 100%;
-    margin-top: 40px !important;
-    padding: 18px 32px !important;
+    margin-top: 14px !important;
+    padding: 14px 16px !important;
     text-align: center;
     font-size: 1rem;
   }
 
+  .site-footer {
+    background-color: #ffffff;
+    padding: 32px 0 34px;
+  }
+
   .site-footer .text-gray-500 {
+    font-size: 0.85rem;
     flex-direction: column;
-    gap: 8px;
-    text-align: center;
+    gap: 6px;
+    text-align: left;
+    align-items: flex-start;
   }
 }
 
 @media (max-width: 480px) {
+  :root {
+    --mobile-side-padding: clamp(16px, 7vw, 20px);
+  }
+
   body {
-    font-size: 15px;
+    font-size: 0.95rem;
   }
 
   .hero-section {
-    padding: 44px 0 20px;
+    padding: calc(env(safe-area-inset-top, 0px) + 28px) 0 22px;
   }
 
   .hero-shell {
-    gap: 20px;
+    gap: 16px;
   }
 
-  .hero-shell h1 {
-    font-size: clamp(1.85rem, 9vw, 2.2rem);
-    margin-bottom: 12px;
+  .hero-title {
+    font-size: clamp(1.75rem, 7vw, 2.1rem) !important;
+    margin-bottom: 12px !important;
   }
 
   .hero-grid {
-    gap: 18px;
+    gap: 16px;
   }
 
-  .profile-section {
-    padding-bottom: 72px;
-  }
-
-  .profile-stack {
-    gap: 24px;
-  }
-
-  .profile-photo-wrapper {
-    width: 100%;
-    border-radius: 28px;
-  }
-
-  .profile-photo-wrapper::after {
-    top: 3%;
-    right: 4%;
-    width: min(65%, 180px);
+  .profile-stack h2 {
+    font-size: clamp(1.55rem, 6vw, 1.8rem);
+    margin-top: 16px;
   }
 
   .contact-section {
-    padding: 40px 0 72px;
+    padding: 28px 0 52px;
+  }
+
+  .contact-title {
+    font-size: clamp(1.55rem, 6vw, 1.85rem) !important;
+    margin-bottom: 16px !important;
   }
 
   .contact-grid {
-    gap: 16px;
+    gap: 12px;
   }
 
   .contact-form input,
   .contact-form textarea {
-    padding: 12px 14px;
+    padding: 12px;
   }
 
   .contact-submit {
-    margin-top: 32px !important;
+    margin-top: 12px !important;
   }
 
   .site-footer {
-    padding: 32px 1.5rem;
+    padding: 24px 0 26px;
   }
 }
