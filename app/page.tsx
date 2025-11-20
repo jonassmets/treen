@@ -63,6 +63,7 @@ export default function Home() {
   const signatureRef = useRef<HTMLDivElement | null>(null);
   const collageSectionRef = useRef<HTMLElement | null>(null);
   const collageItemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollRevealRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollFrameRef = useRef<number | null>(null);
   const signatureFrameRef = useRef<number | null>(null);
   const signatureBaseScrollRef = useRef<number | null>(null);
@@ -206,6 +207,49 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const elements = scrollRevealRefs.current.filter(
+      (el): el is HTMLDivElement => Boolean(el)
+    );
+    if (elements.length === 0) {
+      return undefined;
+    }
+
+    const handleScroll = () => {
+      const viewportHeight = window.innerHeight || 1;
+      elements.forEach((el) => {
+        const speed = Number(el.dataset.speed ?? 0.15);
+        const rect = el.getBoundingClientRect();
+        const offset = ((rect.top - viewportHeight / 2) / viewportHeight) * speed * 200;
+        el.style.setProperty('--parallax-offset', `${offset}px`);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
 
@@ -330,23 +374,44 @@ export default function Home() {
         </h1>
 
         {/* Three Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 items-start">
           {/* Column 1 - Longest */}
-          <div className="space-y-8 text-left" style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
+          <div
+            className="space-y-8 text-left scroll-reveal"
+            data-speed="0.18"
+            style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}
+            ref={(el) => {
+              scrollRevealRefs.current[0] = el;
+            }}
+          >
             <p>
               Sinds 2020 run ik TREEN, waar ik organisaties, teams en individuele professionals begeleid in persoonlijk leiderschap, communicatie, gedrag en samenwerking. Daarvoor werkte ik meer dan tien jaar als trainer, coach en adviseur bij onder andere Spraakwater, Zuidema, LinQue Consult en Teylingereind. Die brede achtergrond — van zorg en onderwijs tot overheid en bedrijfsleven — vormt de solide basis onder mijn aanpak.
             </p>
           </div>
 
           {/* Column 2 - Medium */}
-          <div className="space-y-8 text-left" style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
+          <div
+            className="space-y-8 text-left scroll-reveal"
+            data-speed="0.12"
+            style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}
+            ref={(el) => {
+              scrollRevealRefs.current[1] = el;
+            }}
+          >
             <p>
               Mijn stijl is nuchter, warm en altijd gericht op wat er écht gebeurt in de groep. Ik creëer een open en veilige sfeer waarin mensen durven experimenteren, hun eigen patronen leren herkennen en stappen zetten die blijven hangen. Praktisch waar het moet, verdiepend waar het kan — altijd met aandacht voor de balans tussen individuele groei en groepsdynamiek.
             </p>
           </div>
 
           {/* Column 3 - Shortest */}
-          <div className="space-y-8 text-left" style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
+          <div
+            className="space-y-8 text-left scroll-reveal"
+            data-speed="0.2"
+            style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}
+            ref={(el) => {
+              scrollRevealRefs.current[2] = el;
+            }}
+          >
             <p>
               Ik werk met teams en professionals die willen groeien, die met meer lef én meer bewustzijn willen samenwerken, en daarbij iemand zoeken die scherpte en veiligheid moeiteloos weet te combineren. Iemand die beweging brengt zonder de mens uit het oog te verliezen.
             </p>
@@ -439,7 +504,7 @@ export default function Home() {
       {/* Floating Collage Section */}
       <section
         ref={collageSectionRef}
-        className="w-full float-collage"
+        className="w-full float-collage hidden md:block"
         style={{
           scrollSnapAlign: 'start',
           scrollSnapStop: 'always',
