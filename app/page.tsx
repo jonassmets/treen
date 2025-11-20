@@ -302,17 +302,23 @@ export default function Home() {
   useEffect(() => {
     if (typeof document === 'undefined') return undefined;
 
-    const previousAccent = document.documentElement.style.getPropertyValue('--accent-color');
-    document.body.style.backgroundColor = accentColor;
-    document.documentElement.style.setProperty('--accent-color', accentColor);
+    const root = document.documentElement;
+    const previousAccent = root.style.getPropertyValue('--accent-color');
+    const previousHtmlBg = root.style.backgroundColor;
+    const previousBodyBg = document.body.style.backgroundColor;
+
+    root.style.setProperty('--accent-color', accentColor);
+    root.style.backgroundColor = accentColor;
+    document.body.style.backgroundColor = '#ffffff';
 
     return () => {
-      document.body.style.backgroundColor = '';
       if (previousAccent) {
-        document.documentElement.style.setProperty('--accent-color', previousAccent);
+        root.style.setProperty('--accent-color', previousAccent);
       } else {
-        document.documentElement.style.removeProperty('--accent-color');
+        root.style.removeProperty('--accent-color');
       }
+      root.style.backgroundColor = previousHtmlBg;
+      document.body.style.backgroundColor = previousBodyBg;
     };
   }, [accentColor]);
 
