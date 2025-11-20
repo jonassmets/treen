@@ -384,7 +384,7 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(1.75rem, 7vw, 2.1rem) !important;
+    font-size: clamp(2.75rem, 7vw, 2.1rem) !important;
     margin-bottom: 12px !important;
   }
 
