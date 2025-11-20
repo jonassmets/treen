@@ -300,24 +300,19 @@ export default function Home() {
   }, [collageImages]);
 
   useEffect(() => {
-    document.body.style.backgroundColor = accentColor;
+    if (typeof document === 'undefined') return undefined;
 
-    const style = document.createElement('style');
-    style.innerHTML = `
-      ::selection {
-        background-color: ${accentColor};
-        color: white;
-      }
-      ::-moz-selection {
-        background-color: ${accentColor};
-        color: white;
-      }
-    `;
-    document.head.appendChild(style);
+    const previousAccent = document.documentElement.style.getPropertyValue('--accent-color');
+    document.body.style.backgroundColor = accentColor;
+    document.documentElement.style.setProperty('--accent-color', accentColor);
 
     return () => {
-      document.head.removeChild(style);
       document.body.style.backgroundColor = '';
+      if (previousAccent) {
+        document.documentElement.style.setProperty('--accent-color', previousAccent);
+      } else {
+        document.documentElement.style.removeProperty('--accent-color');
+      }
     };
   }, [accentColor]);
 

@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent-color: #171717;
 }
 
 @theme inline {
@@ -29,6 +30,16 @@ body {
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+}
+
+::selection {
+  background-color: var(--accent-color, #171717);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: var(--accent-color, #171717);
+  color: #ffffff;
 }
 
 @keyframes blob {
@@ -109,10 +120,9 @@ body {
   }
 
   body {
-    background-color: #ffffff !important;
     font-size: 1rem;
     line-height: 1.4;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-padding-top: env(safe-area-inset-top, 0px);
     overflow-x: hidden;
   }
@@ -165,27 +175,31 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(2rem, 5vw, 2.5rem) !important;
+    font-size: clamp(3rem, 7vw, 3.5rem) !important;
     line-height: 1.3 !important;
     margin-bottom: 14px !important;
     max-width: 20ch;
     text-align: left;
+    margin-inline: 10px;
   }
 
   .hero-grid {
     display: flex;
     flex-direction: column;
     gap: 22px;
+    margin-inline: 10px;
   }
 
   .hero-grid > div {
     max-width: 52ch;
+    margin-inline: 10px;
   }
 
   .hero-grid p {
     font-size: clamp(1.5rem, 5vw, 1.6rem);
     line-height: 1.35;
     color: #4d4d4d;
+    margin-inline: 10px;
   }
 
   .hero-grid .scroll-reveal {
@@ -218,35 +232,42 @@ body {
   .profile-section {
     min-height: 100vh !important;
     padding: 24px 0;
+    margin-inline: 10px;
   }
 
   .profile-photo-wrapper {
-    display: none;
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 16px;
   }
 
   .profile-stack {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-end;
+    text-align: right;
     gap: 24px;
+    margin-inline: 10px;
   }
 
   .profile-stack .flex-1 {
     width: 100%;
     max-width: 52ch;
     padding-inline: 0;
-    text-align: center;
+    text-align: right;
+    margin-inline: 10px;
   }
 
   .profile-stack .flex-1 a {
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .profile-stack h2 {
     font-size: clamp(1.65rem, 4.6vw, 1.9rem);
     margin-top: 24px;
     line-height: 1.25;
-    text-align: center;
+    text-align: right;
+    margin-inline: 10px;
   }
 
   .profile-stack p,
@@ -254,7 +275,8 @@ body {
   .profile-stack .text-gray-600 {
     font-size: clamp(0.98rem, 3vw, 1.05rem);
     line-height: 1.3;
-    text-align: center;
+    text-align: right;
+    margin-inline: 10px;
   }
 
   .profile-stack .space-y-2 > * + * {
@@ -275,6 +297,7 @@ body {
     justify-content: center !important;
     align-items: center !important;
     text-align: center;
+    margin-inline: 10px;
   }
 
   .contact-title {
@@ -283,6 +306,7 @@ body {
     margin-bottom: 18px !important;
     max-width: 52ch;
     text-align: center;
+    margin-inline: 10px;
   }
 
   .contact-form {
@@ -290,6 +314,7 @@ body {
     line-height: 1.4;
     max-width: 52ch;
     margin: 0 auto;
+    margin-inline: 10px;
   }
 
   .contact-grid {
@@ -299,7 +324,7 @@ body {
   .contact-form input,
   .contact-form textarea {
     font-size: inherit;
-    border-radius: 32px;
+    border-radius: 0;
     padding: 12px 14px;
   }
 
