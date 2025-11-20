@@ -124,7 +124,7 @@ body {
   body {
     font-size: 1rem;
     line-height: 1.4;
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
     scroll-padding-top: env(safe-area-inset-top, 0px);
     overflow-x: hidden;
   }
@@ -161,13 +161,15 @@ body {
     scroll-snap-align: center !important;
     scroll-snap-stop: always !important;
     min-height: 100vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero-section {
     min-height: 100vh !important;
     height: auto !important;
-    padding: calc(env(safe-area-inset-top, 0px) + 24px) 0 24px;
-    align-items: center;
+    padding: calc(env(safe-area-inset-top, 0px) + 20px) 0 20px;
   }
 
   .hero-shell {
@@ -177,7 +179,7 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(3.3rem, 8vw, 4rem) !important;
+    font-size: clamp(4.2rem, 10vw, 5.5rem) !important;
     line-height: 1.25 !important;
     margin-bottom: 18px !important;
     max-width: 20ch;
@@ -239,7 +241,7 @@ body {
     display: block;
     width: 100%;
     max-width: 420px;
-    margin: 0 0 16px;
+    margin: 0 auto 16px;
   }
 
   .profile-stack {
@@ -293,6 +295,7 @@ body {
     justify-content: center !important;
     align-items: center !important;
     text-align: center;
+    display: flex;
   }
 
   .contact-title {
