@@ -161,9 +161,14 @@ body {
     scroll-snap-align: center !important;
     scroll-snap-stop: always !important;
     min-height: 100vh !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .contact-details-section,
+  .contact-form-section {
+    margin-top: 0 !important;
   }
 
   .hero-section {
@@ -179,7 +184,7 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(4.2rem, 10vw, 5.5rem) !important;
+    font-size: clamp(5rem, 13vw, 6.8rem) !important;
     line-height: 1.25 !important;
     margin-bottom: 18px !important;
     max-width: 20ch;
@@ -242,6 +247,11 @@ body {
     width: 100%;
     max-width: 420px;
     margin: 0 auto 16px;
+  }
+
+  .profile-stack .profile-photo-wrapper,
+  .profile-photo-wrapper {
+    align-self: center;
   }
 
   .profile-stack {
