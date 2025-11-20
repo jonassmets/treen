@@ -402,7 +402,7 @@ body {
   }
 
   .contact-title {
-    font-size: clamp(1.55rem, 6vw, 1.85rem) !important;
+    font-size: clamp(2.55rem, 6vw, 1.85rem) !important;
     margin-bottom: 16px !important;
   }
 
