@@ -529,13 +529,17 @@ export default function Home() {
       </section>
 
       {/* Profile Section - Below the fold */}
-      <section className="profile-section w-full flex items-center justify-center" style={{ 
+      <section
+        id="contact-details"
+        className="profile-section contact-details-section w-full flex items-center justify-center"
+        style={{ 
         minHeight: '100vh', 
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
         alignItems: 'center'
-      }}>
+        }}
+      >
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px' }}>
         <div className="profile-stack flex flex-col md:flex-row gap-16 items-start text-left">
           <div className="profile-photo-wrapper">
@@ -635,14 +639,18 @@ export default function Home() {
       </section>
 
       {/* Contact Form */}
-      <section className="contact-section w-full flex items-center justify-center" style={{ 
+      <section
+        id="contact-form"
+        className="contact-section contact-form-section w-full flex items-center justify-center"
+        style={{ 
         minHeight: '100vh', 
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
         alignItems: 'center',
         marginTop: '-100px'
-      }}>
+      }}
+      >
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px', position: 'relative', zIndex: 1 }}>
         <h2 className="contact-title font-bold text-gray-900 text-left" style={{ fontWeight: 700, fontSize: '70px', lineHeight: '1.1em', marginBottom: '100px' }}>Neem contact op</h2>
         <form
