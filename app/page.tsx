@@ -65,6 +65,7 @@ export default function Home() {
   const collageItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollRevealRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollFrameRef = useRef<number | null>(null);
+  const mobileDriftFrameRef = useRef<number | null>(null);
   const signatureFrameRef = useRef<number | null>(null);
   const signatureBaseScrollRef = useRef<number | null>(null);
 
@@ -148,9 +149,159 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (collageImages.length === 0 || typeof window === 'undefined') {
+      collageItemRefs.current = [];
+      return undefined;
+    }
+
+    collageItemRefs.current = collageItemRefs.current.slice(0, collageImages.length);
+
+    const setupDesktop = () => {
+      const updatePositions = () => {
+        const section = collageSectionRef.current;
+        if (!section) {
+          scrollFrameRef.current = null;
+          return;
+        }
+
+        const viewportHeight = window.innerHeight || 1;
+        const viewportWidth = window.innerWidth || 1;
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight || viewportHeight;
+        const rangeStart = sectionTop - viewportHeight;
+        const rangeEnd = sectionTop + sectionHeight;
+        const totalRange = rangeEnd - rangeStart || 1;
+
+        const rawProgress = (window.scrollY - rangeStart) / totalRange;
+        const progress = Math.min(1, Math.max(0, rawProgress));
+
+        collageItemRefs.current.forEach((item, idx) => {
+          const config = collageImages[idx];
+          if (!item || !config) return;
+
+          const travelDistance = viewportWidth * 2.2 + config.size + config.offset;
+          const translateX =
+            viewportWidth + config.offset - progress * travelDistance * config.speedFactor;
+          const entryYOffset = ENTRY_Y_OFFSETS[idx % ENTRY_Y_OFFSETS.length] ?? 0;
+          const translateY = viewportHeight * entryYOffset * (1 - progress);
+
+          item.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
+        });
+
+        scrollFrameRef.current = null;
+      };
+
+      const scheduleUpdate = () => {
+        if (scrollFrameRef.current === null) {
+          scrollFrameRef.current = window.requestAnimationFrame(updatePositions);
+        }
+      };
+
+      scheduleUpdate();
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate);
+
+      return () => {
+        if (scrollFrameRef.current !== null) {
+          window.cancelAnimationFrame(scrollFrameRef.current);
+          scrollFrameRef.current = null;
+        }
+        window.removeEventListener('scroll', scheduleUpdate);
+        window.removeEventListener('resize', scheduleUpdate);
+      };
+    };
+
+    const setupMobile = () => {
+      // Guard clause – only run this pathway when the requested mobile breakpoint is active.
+      if (window.innerWidth > 768) {
+        return setupDesktop();
+      }
+
+      const getStates = () => {
+        const viewportWidth = window.innerWidth || 1;
+        const viewportHeight = window.innerHeight || 1;
+
+        return collageItemRefs.current.map((item, idx) => {
+          if (!item) return null;
+          const rect = item.getBoundingClientRect();
+          const baseSpeed = idx % 2 === 0 ? 0.35 : 0.55;
+          return {
+            width: rect.width || (collageImages[idx]?.size ?? 320),
+            x: viewportWidth + Math.random() * viewportWidth,
+            y: ((viewportHeight / (collageItemRefs.current.length + 1)) * (idx + 1)) + idx * 10,
+            speed: baseSpeed * (0.5 + Math.random() * 0.5),
+            wiggleAmplitude: 4 + Math.random() * 4,
+            wiggleFrequency: (Math.PI * 2) / (2000 + Math.random() * 2000),
+            phase: Math.random() * Math.PI * 2,
+          };
+        });
+      };
+
+      let states = getStates();
+
+      const animate = (timestamp: number) => {
+        if (window.innerWidth > 768) {
+          return;
+        }
+
+        collageItemRefs.current.forEach((item, idx) => {
+          const state = states[idx];
+          if (!item || !state) return;
+
+          state.x -= state.speed;
+          // Restart the drift once an image exits the viewport to keep the loop seamless.
+          if (state.x < -state.width) {
+            state.x = (window.innerWidth || 1) + Math.random() * (window.innerWidth || 1) * 0.4;
+            state.y = Math.random() * ((window.innerHeight || 1) * 0.8);
+            // Random phase offsets double as wiggle delays so every item feels unique.
+            state.phase = Math.random() * Math.PI * 2;
+          }
+          const wiggle = Math.sin(timestamp * state.wiggleFrequency + state.phase) * state.wiggleAmplitude;
+          item.style.transform = `translate3d(${state.x}px, ${state.y + wiggle}px, 0)`;
+        });
+
+        mobileDriftFrameRef.current = window.requestAnimationFrame(animate);
+      };
+
+      mobileDriftFrameRef.current = window.requestAnimationFrame(animate);
+
+      const handleResize = () => {
+        if (window.innerWidth > 768) {
+          return;
+        }
+        states = getStates();
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        if (mobileDriftFrameRef.current !== null) {
+          window.cancelAnimationFrame(mobileDriftFrameRef.current);
+          mobileDriftFrameRef.current = null;
+        }
+        window.removeEventListener('resize', handleResize);
+      };
+    };
+
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    let activeCleanup = mediaQuery.matches ? setupMobile() : setupDesktop();
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      activeCleanup?.();
+      activeCleanup = event.matches ? setupMobile() : setupDesktop();
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => {
+      activeCleanup?.();
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  }, [collageImages]);
+
+  useEffect(() => {
     document.body.style.backgroundColor = accentColor;
 
-    // Add custom selection color style
     const style = document.createElement('style');
     style.innerHTML = `
       ::selection {
@@ -280,74 +431,13 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    if (collageImages.length === 0) {
-      collageItemRefs.current = [];
-      return;
-    }
-
-    collageItemRefs.current = collageItemRefs.current.slice(0, collageImages.length);
-
-    const updatePositions = () => {
-      const section = collageSectionRef.current;
-      if (!section) {
-  scrollFrameRef.current = null;
-        return;
-      }
-
-      const viewportHeight = window.innerHeight || 1;
-      const viewportWidth = window.innerWidth || 1;
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight || viewportHeight;
-      const rangeStart = sectionTop - viewportHeight;
-      const rangeEnd = sectionTop + sectionHeight;
-      const totalRange = rangeEnd - rangeStart || 1;
-
-      const rawProgress = (window.scrollY - rangeStart) / totalRange;
-      const progress = Math.min(1, Math.max(0, rawProgress));
-
-      collageItemRefs.current.forEach((item, idx) => {
-        const config = collageImages[idx];
-        if (!item || !config) return;
-
-        const travelDistance = viewportWidth * 2.2 + config.size + config.offset;
-        const translateX =
-          viewportWidth + config.offset - progress * travelDistance * config.speedFactor;
-        const entryYOffset = ENTRY_Y_OFFSETS[idx % ENTRY_Y_OFFSETS.length] ?? 0;
-        const translateY = viewportHeight * entryYOffset * (1 - progress);
-
-        item.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
-      });
-
-  scrollFrameRef.current = null;
-    };
-
-    const scheduleUpdate = () => {
-      if (scrollFrameRef.current === null) {
-        scrollFrameRef.current = window.requestAnimationFrame(updatePositions);
-      }
-    };
-
-    scheduleUpdate();
-    window.addEventListener('scroll', scheduleUpdate, { passive: true });
-    window.addEventListener('resize', scheduleUpdate);
-
-    return () => {
-      if (scrollFrameRef.current !== null) {
-        window.cancelAnimationFrame(scrollFrameRef.current);
-      }
-      window.removeEventListener('scroll', scheduleUpdate);
-      window.removeEventListener('resize', scheduleUpdate);
-    };
-  }, [collageImages]);
-
   return (
     <main className="bg-white" style={{ 
       fontSize: '20px', 
       position: 'relative'
     }}>
       {/* Hero Section - Entry Text + Paragraphs */}
-      <section className="w-full flex items-center justify-center" style={{ 
+      <section className="hero-section w-full flex items-center justify-center" style={{ 
         minHeight: '100vh',
         height: '100vh',
         scrollSnapAlign: 'start',
@@ -356,7 +446,7 @@ export default function Home() {
         alignItems: 'center'
       }}>
         <div
-          className="w-full px-6 md:px-12"
+          className="hero-shell w-full px-6 md:px-12"
           style={{
             maxWidth: '979px',
             position: 'relative',
@@ -367,14 +457,14 @@ export default function Home() {
             justifyContent: 'center'
           }}
         >
-        {/* Hero Title */}
-        <h1 className="font-bold text-gray-900 text-left" style={{ fontWeight: 700, fontSize: '70px', lineHeight: '1.1em', marginBottom: '100px' }}>
+  {/* Hero Title */}
+  <h1 className="hero-title font-bold text-gray-900 text-left" style={{ fontWeight: 700, fontSize: '70px', lineHeight: '1.1em', marginBottom: '100px' }}>
           Fijn dat je hier bent.<br />
           Ik help mensen en teams groeien door helderheid, humor en écht contact.
         </h1>
 
-        {/* Three Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 items-start">
+    {/* Three Column Layout */}
+    <div className="hero-grid grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 items-start">
           {/* Column 1 - Longest */}
           <div
             className="space-y-8 text-left scroll-reveal"
@@ -439,7 +529,7 @@ export default function Home() {
       </section>
 
       {/* Profile Section - Below the fold */}
-      <section className="w-full flex items-center justify-center" style={{ 
+      <section className="profile-section w-full flex items-center justify-center" style={{ 
         minHeight: '100vh', 
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
@@ -447,14 +537,16 @@ export default function Home() {
         alignItems: 'center'
       }}>
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px' }}>
-        <div className="flex flex-col md:flex-row gap-16 items-start text-left">
-          <Image 
-            src="/profile.jpg" 
-            alt="Joris van den Hout" 
-            width={280} 
-            height={350}
-            className="rounded-lg"
-          />
+        <div className="profile-stack flex flex-col md:flex-row gap-16 items-start text-left">
+          <div className="profile-photo-wrapper">
+            <Image 
+              src="/profile.jpg" 
+              alt="Joris van den Hout" 
+              width={280} 
+              height={350}
+              className="rounded-lg"
+            />
+          </div>
           <div className="flex-1 text-left">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Joris van den Hout</h2>
             <p className="text-gray-600 mb-8">
@@ -504,7 +596,7 @@ export default function Home() {
       {/* Floating Collage Section */}
       <section
         ref={collageSectionRef}
-        className="w-full float-collage hidden md:block"
+        className="w-full float-collage"
         style={{
           scrollSnapAlign: 'start',
           scrollSnapStop: 'always',
@@ -543,7 +635,7 @@ export default function Home() {
       </section>
 
       {/* Contact Form */}
-      <section className="w-full flex items-center justify-center" style={{ 
+      <section className="contact-section w-full flex items-center justify-center" style={{ 
         minHeight: '100vh', 
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
@@ -552,14 +644,14 @@ export default function Home() {
         marginTop: '-100px'
       }}>
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px', position: 'relative', zIndex: 1 }}>
-        <h2 className="font-bold text-gray-900 text-left" style={{ fontWeight: 700, fontSize: '70px', lineHeight: '1.1em', marginBottom: '100px' }}>Neem contact op</h2>
+        <h2 className="contact-title font-bold text-gray-900 text-left" style={{ fontWeight: 700, fontSize: '70px', lineHeight: '1.1em', marginBottom: '100px' }}>Neem contact op</h2>
         <form
-          className="text-left"
+          className="text-left contact-form"
           style={{ color: '#808080', lineHeight: '1.6em' }}
           onSubmit={handleContactSubmit}
           noValidate
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          <div className="contact-grid grid grid-cols-1 md:grid-cols-2 gap-16">
             <div>
               <input
                 type="text"
@@ -652,7 +744,7 @@ export default function Home() {
           </div>
           <button
             type="submit"
-            className="bg-gray-900 text-white font-semibold transition-colors disabled:opacity-60"
+            className="contact-submit bg-gray-900 text-white font-semibold transition-colors disabled:opacity-60"
             style={{ borderRadius: '50px', marginTop: '48px', padding: '20px 60px' }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = accentColor}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1a1a1a'}
@@ -681,7 +773,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <div className="w-full px-6 md:px-12 py-16 border-t border-gray-200 flex justify-center" style={{ position: 'relative', zIndex: 1 }}>
+      <div className="site-footer w-full px-6 md:px-12 py-16 border-t border-gray-200 flex justify-center" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: '979px', width: '100%' }}>
           <div className="text-gray-500 text-sm flex justify-between items-center">
           <p>© 2025 TREEN. All Rights Reserved.</p>
