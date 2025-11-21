@@ -274,7 +274,9 @@ body {
   .hero-section {
     min-height: 100vh !important;
     height: auto !important;
-    padding: calc(env(safe-area-inset-top, 0px) + 20px) 0 20px;
+    padding: calc(env(safe-area-inset-top, 0px) + 15px) 0 15px;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
   }
 
   .hero-shell {
@@ -341,7 +343,7 @@ body {
     display: block;
     width: min(70%, 280px);
     max-width: 100%;
-    margin: 12px 0 0;
+    margin: 6px 0 0;
     text-align: left;
     opacity: 0;
     transform: translate3d(0, 28px, 0);
@@ -426,7 +428,7 @@ body {
   .contact-section {
     min-height: 100vh !important;
     margin-top: 0;
-    padding: 32px 0;
+    padding: 32px 0 calc(env(safe-area-inset-bottom, 0px) + 70px);
     background-color: #ffffff;
     justify-content: center !important;
     align-items: center !important;
@@ -524,7 +526,7 @@ body {
   }
 
   .contact-section {
-    padding: 28px 0 52px;
+    padding: 28px 0 calc(env(safe-area-inset-bottom, 0px) + 60px);
   }
 
   .contact-title {

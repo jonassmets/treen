@@ -566,7 +566,7 @@ export default function Home() {
           <div className="flex-1 text-left">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Joris van den Hout</h2>
             <p className="text-gray-600 mb-8">
-              Trainer - Facilitator - Adviseur - Ademcoach
+              Trainer - Facilitator - Adviseur
             </p>
             <div className="space-y-2 mb-8">
               <p className="text-gray-600">
@@ -591,7 +591,6 @@ export default function Home() {
                   joris@treen.nu
                 </a>
               </p>
-              <p className="text-gray-600">Wijk bij Duurstede</p>
             </div>
             <a 
               href="https://nl.linkedin.com/in/jorisvandenhout" 
