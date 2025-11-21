@@ -59,6 +59,17 @@ body {
   }
 }
 
+@keyframes signatureSlideUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .animate-blob {
   animation: blob 7s infinite;
 }
@@ -104,6 +115,24 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
+.hero-title {
+  font-size: clamp(3.4rem, 5.5vw, 5.8rem);
+  line-height: 1.08;
+  margin-bottom: clamp(2.25rem, 4vw, 4.5rem);
+}
+
+.hero-grid p {
+  font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+  line-height: 1.55;
+  color: #4d4d4d;
+}
+
+.contact-title {
+  font-size: clamp(3rem, 5vw, 4.6rem);
+  line-height: 1.12;
+  margin-bottom: clamp(1.5rem, 3.5vw, 3.5rem);
+}
+
 .mobile-signature {
   display: none;
 }
@@ -118,6 +147,24 @@ body {
 .scroll-reveal.is-visible {
   opacity: 1;
   transform: translate3d(0, var(--parallax-offset), 0);
+}
+
+@media (min-width: 769px) {
+  .hero-section,
+  .profile-section,
+  .contact-section {
+    padding-block: clamp(72px, 12vh, 160px);
+  }
+
+  .hero-section,
+  .contact-section {
+    min-height: min(100vh, 900px);
+  }
+
+  .hero-shell {
+    height: auto;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 768px) {
@@ -243,9 +290,14 @@ body {
 
   .mobile-signature {
     display: block;
-    width: 60%;
-    max-width: 220px;
-    margin: 24px auto 0;
+    width: min(70%, 280px);
+    max-width: 100%;
+    margin: 12px 0 0;
+    text-align: left;
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    animation: signatureSlideUp 0.65s ease-out 0.1s forwards;
+    will-change: transform, opacity;
   }
 
   .mobile-signature img,
@@ -264,8 +316,14 @@ body {
   .profile-photo-wrapper {
     display: block;
     width: 100%;
-    max-width: 420px;
-    margin: 0 auto 16px;
+    max-width: none;
+    margin: 0 0 18px;
+  }
+
+  .profile-photo-wrapper img {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
   }
 
   .profile-stack .profile-photo-wrapper,

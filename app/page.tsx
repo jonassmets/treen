@@ -439,8 +439,8 @@ export default function Home() {
     }}>
       {/* Hero Section - Entry Text + Paragraphs */}
       <section className="hero-section w-full flex items-center justify-center" style={{ 
-        minHeight: '100vh',
-        height: '100vh',
+        minHeight: 'min(100vh, 900px)',
+        padding: 'clamp(64px, 12vh, 150px) 0',
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
@@ -452,14 +452,14 @@ export default function Home() {
             maxWidth: '979px',
             position: 'relative',
             zIndex: 1,
-            height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            gap: 'clamp(32px, 4vh, 48px)'
           }}
         >
   {/* Hero Title */}
-  <h1 className="hero-title font-bold text-gray-900 text-left" style={{ fontWeight: 700, fontSize: '70px', lineHeight: '1.1em', marginBottom: '100px' }}>
+  <h1 className="hero-title font-bold text-gray-900 text-left" style={{ fontWeight: 700 }}>
           Fijn dat je hier bent.<br />
           Ik help mensen en teams groeien door helderheid, humor en écht contact.
         </h1>
@@ -544,11 +544,12 @@ export default function Home() {
         id="contact-details"
         className="profile-section contact-details-section w-full flex items-center justify-center"
         style={{ 
-        minHeight: '100vh', 
+        minHeight: 'min(100vh, 900px)', 
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 'clamp(64px, 12vh, 150px) 0'
         }}
       >
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px' }}>
@@ -654,16 +655,16 @@ export default function Home() {
         id="contact-form"
         className="contact-section contact-form-section w-full flex items-center justify-center"
         style={{ 
-        minHeight: '100vh', 
+        minHeight: 'min(100vh, 900px)', 
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
         alignItems: 'center',
-        marginTop: '-100px'
+        padding: 'clamp(72px, 12vh, 150px) 0'
       }}
       >
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px', position: 'relative', zIndex: 1 }}>
-        <h2 className="contact-title font-bold text-gray-900 text-left" style={{ fontWeight: 700, fontSize: '70px', lineHeight: '1.1em', marginBottom: '100px' }}>Neem contact op</h2>
+        <h2 className="contact-title font-bold text-gray-900 text-left" style={{ fontWeight: 700 }}>Neem contact op</h2>
         <form
           className="text-left contact-form"
           style={{ color: '#808080', lineHeight: '1.6em' }}

@@ -1,0 +1,10 @@
+
+> nextjs@0.1.0 build
+> next build
+
+   ▲ Next.js 16.0.3 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1288.1ms
+   Running TypeScript ...
