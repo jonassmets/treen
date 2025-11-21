@@ -440,7 +440,7 @@ export default function Home() {
       {/* Hero Section - Entry Text + Paragraphs */}
       <section className="hero-section w-full flex items-center justify-center" style={{ 
         minHeight: 'min(100vh, 900px)',
-        padding: 'clamp(64px, 12vh, 150px) 0',
+        padding: 'clamp(36px, 10vh, 140px) 0',
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
@@ -455,7 +455,7 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            gap: 'clamp(32px, 4vh, 48px)'
+            gap: 'clamp(24px, 3vh, 40px)'
           }}
         >
   {/* Hero Title */}
@@ -549,7 +549,7 @@ export default function Home() {
         scrollSnapStop: 'always',
         display: 'flex',
         alignItems: 'center',
-        padding: 'clamp(64px, 12vh, 150px) 0'
+        padding: 'clamp(44px, 10vh, 140px) 0'
         }}
       >
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px' }}>
@@ -660,7 +660,7 @@ export default function Home() {
         scrollSnapStop: 'always',
         display: 'flex',
         alignItems: 'center',
-        padding: 'clamp(72px, 12vh, 150px) 0'
+        padding: 'clamp(48px, 10vh, 140px) 0'
       }}
       >
         <div className="w-full px-6 md:px-12" style={{ maxWidth: '979px', position: 'relative', zIndex: 1 }}>
@@ -671,7 +671,7 @@ export default function Home() {
           onSubmit={handleContactSubmit}
           noValidate
         >
-          <div className="contact-grid grid grid-cols-1 md:grid-cols-2 gap-16">
+          <div className="contact-grid grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
             <div>
               <input
                 type="text"
@@ -765,7 +765,7 @@ export default function Home() {
           <button
             type="submit"
             className="contact-submit bg-gray-900 text-white font-semibold transition-colors disabled:opacity-60"
-            style={{ borderRadius: '50px', marginTop: '48px', padding: '20px 60px' }}
+            style={{ borderRadius: '50px', marginTop: '36px', padding: '18px 48px' }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = accentColor}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1a1a1a'}
             disabled={isSubmitting}
