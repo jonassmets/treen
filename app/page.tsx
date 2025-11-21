@@ -506,6 +506,16 @@ export default function Home() {
             <p>
               Ik werk met teams en professionals die willen groeien, die met meer lef én meer bewustzijn willen samenwerken, en daarbij iemand zoeken die scherpte en veiligheid moeiteloos weet te combineren. Iemand die beweging brengt zonder de mens uit het oog te verliezen.
             </p>
+            <div className="mobile-signature">
+              <Image
+                src="/signature.png"
+                alt="Handtekening van Joris"
+                width={256}
+                height={120}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+                priority
+              />
+            </div>
             <div className="pt-6 md:pt-4 flex md:justify-end">
               <div className="w-48 md:w-64" style={{ maxWidth: '260px' }}>
                 <div

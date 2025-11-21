@@ -104,6 +104,10 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
+.mobile-signature {
+  display: none;
+}
+
 .scroll-reveal {
   opacity: 0;
   transform: translate3d(0, 60px, 0);
@@ -235,6 +239,21 @@ body {
 
   .signature-container {
     display: none;
+  }
+
+  .mobile-signature {
+    display: block;
+    width: 60%;
+    max-width: 220px;
+    margin: 24px auto 0;
+  }
+
+  .mobile-signature img,
+  .mobile-signature picture,
+  .mobile-signature video {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   .profile-section {
