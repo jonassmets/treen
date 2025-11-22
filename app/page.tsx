@@ -446,11 +446,11 @@ export default function Home() {
       {/* Hero Section - Entry Text + Paragraphs */}
       <section className="hero-section w-full flex items-center justify-center" style={{ 
         minHeight: 'max(100svh, 720px)',
-        padding: 'clamp(24px, 8vh, 80px) 0 clamp(32px, 7vh, 96px)',
+        padding: 'clamp(40px, 8vh, 80px) 0',
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'center'
       }}>
         <div
@@ -461,13 +461,13 @@ export default function Home() {
             zIndex: 1,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            gap: 'clamp(20px, 3vh, 36px)'
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 'clamp(24px, 3.5vh, 40px)'
           }}
         >
   {/* Hero Title */}
-  <h1 className="hero-title font-bold text-gray-900 text-left" style={{ fontWeight: 700 }}>
+  <h1 className="hero-title font-bold text-gray-900 text-center" style={{ fontWeight: 700 }}>
           Fijn dat je hier bent.<br />
           Ik help mensen en teams groeien door helderheid, humor en écht contact.
         </h1>
@@ -479,7 +479,7 @@ export default function Home() {
               <p key={`hero-paragraph-${idx}`} className="hero-paragraph">{paragraph}</p>
             ))}
           </div>
-          <div className="signature-stack" style={{ marginTop: 'clamp(12px, 1.5vh, 20px)' }}>
+          <div className="signature-stack" style={{ marginTop: 'clamp(8px, 1vh, 12px)' }}>
             <div className="mobile-signature">
               <Image
                 src="/signature.png"
@@ -490,8 +490,8 @@ export default function Home() {
                 priority
               />
             </div>
-            <div className="pt-4 md:pt-3 flex md:justify-end">
-              <div className="w-40 md:w-52" style={{ maxWidth: '220px' }}>
+            <div className="pt-2 md:pt-2 flex md:justify-center">
+              <div className="w-44 md:w-56" style={{ maxWidth: '240px' }}>
                 <div
                   ref={signatureRef}
                   className="signature-container"

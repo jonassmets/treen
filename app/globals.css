@@ -118,9 +118,9 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(2.8rem, 4.2vw, 4.6rem);
-  line-height: 1.15;
-  margin-bottom: clamp(1.5rem, 2.5vh, 2.8rem);
+  font-size: clamp(3.2rem, 4.8vw, 5.4rem);
+  line-height: 1.12;
+  margin-bottom: clamp(1.8rem, 3vh, 3.2rem);
 }
 
 .hero-section,
@@ -141,10 +141,10 @@ body {
 }
 
 .hero-paragraph {
-  font-size: clamp(0.95rem, 1.1vw, 1.15rem);
-  line-height: 1.5;
+  font-size: clamp(1.05rem, 1.25vw, 1.3rem);
+  line-height: 1.55;
   color: #4d4d4d;
-  margin-bottom: clamp(14px, 1.5vh, 18px);
+  margin-bottom: clamp(16px, 2vh, 22px);
   break-inside: avoid-column;
 }
 
@@ -190,13 +190,13 @@ body {
   .hero-section,
   .contact-section {
     min-height: max(100vh, 720px);
-    align-items: flex-start;
+    align-items: center;
   }
 
   .hero-shell {
     height: auto;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
   }
 }
 
