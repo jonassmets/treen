@@ -479,7 +479,7 @@ export default function Home() {
               <p key={`hero-paragraph-${idx}`} className="hero-paragraph">{paragraph}</p>
             ))}
           </div>
-          <div className="signature-stack" style={{ marginTop: 'clamp(12px, 1.5vh, 20px)' }}>
+          <div className="signature-stack" style={{ marginTop: 'clamp(8px, 1vh, 12px)' }}>
             <div className="mobile-signature">
               <Image
                 src="/signature.png"

@@ -11,6 +11,9 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "TREEN - Joris van den Hout | Professional Training & Coaching",
   description: "Transform your potential into performance with professional training and coaching by Joris van den Hout.",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
