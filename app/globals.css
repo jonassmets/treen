@@ -27,8 +27,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
-  height: 100vh;
-  overflow-y: scroll;
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
   scroll-snap-type: y mandatory;
 }
 
@@ -121,6 +123,19 @@ body {
   margin-bottom: clamp(2.25rem, 4vw, 4.5rem);
 }
 
+.hero-section,
+.profile-section,
+.contact-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.hero-grid {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 30px);
+}
+
 .hero-grid p {
   font-size: clamp(1.05rem, 1.3vw, 1.35rem);
   line-height: 1.55;
@@ -153,17 +168,19 @@ body {
   .hero-section,
   .profile-section,
   .contact-section {
-    padding-block: clamp(72px, 12vh, 160px);
+    padding-block: clamp(48px, 10vh, 140px);
   }
 
   .hero-section,
   .contact-section {
-    min-height: min(100vh, 900px);
+    min-height: max(100vh, 720px);
+    align-items: flex-start;
   }
 
   .hero-shell {
     height: auto;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 }
 
@@ -258,7 +275,7 @@ body {
   .hero-section,
   .contact-details-section,
   .contact-form-section {
-    scroll-snap-align: center !important;
+    scroll-snap-align: start !important;
     scroll-snap-stop: always !important;
     min-height: 100vh !important;
     display: flex !important;
@@ -274,7 +291,7 @@ body {
   .hero-section {
     min-height: 100vh !important;
     height: auto !important;
-    padding: calc(env(safe-area-inset-top, 0px) + 15px) 0 15px;
+    padding: calc(env(safe-area-inset-top, 0px) + 6px) 0 18px;
     align-items: flex-start !important;
     justify-content: flex-start !important;
   }
@@ -428,7 +445,7 @@ body {
   .contact-section {
     min-height: 100vh !important;
     margin-top: 0;
-    padding: 32px 0 calc(env(safe-area-inset-bottom, 0px) + 70px);
+    padding: 32px 0 calc(env(safe-area-inset-bottom, 0px) + 32px);
     background-color: #ffffff;
     justify-content: center !important;
     align-items: center !important;
@@ -526,7 +543,7 @@ body {
   }
 
   .contact-section {
-    padding: 28px 0 calc(env(safe-area-inset-bottom, 0px) + 60px);
+    padding: 28px 0 calc(env(safe-area-inset-bottom, 0px) + 28px);
   }
 
   .contact-title {

@@ -44,6 +44,14 @@ const COLLAGE_LAYOUTS: CollageLayout[] = [
 
 const ENTRY_Y_OFFSETS = [0.42, 0.22, 0.08, -0.04, 0.15, 0];
 
+const HERO_PARAGRAPHS = [
+  'Sinds 2020 run ik TREEN, waar ik organisaties, teams en professionals begeleid in persoonlijk leiderschap, communicatie, gedrag en samenwerking. Daarvoor werkte ik meer dan tien jaar als trainer, coach en adviseur bij onder andere Spraakwater, Zuidema, LinQue Consult en Teylingereind. Die veelzijdige achtergrond — van gesloten jeugdhulpverlening en het onderwijsveld tot overheid en bedrijfsleven — vormt de solide basis onder mijn aanpak.',
+  'Ik heb van nature een mensgerichte oriëntatie. Ik geloof dat echte verandering begint bij het individu: bij jezelf kennen, je rol begrijpen en het grotere systeem zien waar je deel van uitmaakt. Vanuit dat inzicht ontstaat ruimte voor ontwikkeling, en daar begint groei. In al mijn werk staat het versterken van mensen en teams centraal — zodat zij effectiever worden en met meer bewustzijn, lef en plezier kunnen samenwerken.',
+  'Mijn stijl is nuchter, warm en altijd gericht op wat er écht gebeurt in de groep. Ik creëer een open, ontspannen en veilig speelveld waarin alles bespreekbaar wordt. Wat op tafel moet komen, komt op tafel. In die setting durven mensen te experimenteren, hun patronen te herkennen en stappen te zetten die blijven hangen. Praktisch waar het moet, verdiepend waar het kan — altijd in balans tussen individuele groei en groepsdynamiek.',
+  'Ik werk met teams en professionals die willen groeien en die willen samenwerken met meer lef en bewustzijn. Zij zoeken iemand die scherpte en veiligheid moeiteloos kan combineren; iemand die beweging brengt zonder de mens uit het oog te verliezen. Dat is precies waar ik op mijn best ben: soepel, kwetsbaar en vanzelfsprekend, vanuit vertrouwen.',
+] as const;
+const HERO_REVEAL_SPEEDS = [0.18, 0.14, 0.2, 0.16] as const;
+
 const IMAGE_FOLDER = '/image%20section';
 
 const buildImageSrc = (fileName: string) => `${IMAGE_FOLDER}/${encodeURIComponent(fileName)}`;
@@ -68,6 +76,10 @@ export default function Home() {
   const mobileDriftFrameRef = useRef<number | null>(null);
   const signatureFrameRef = useRef<number | null>(null);
   const signatureBaseScrollRef = useRef<number | null>(null);
+
+  if (scrollRevealRefs.current.length > HERO_PARAGRAPHS.length) {
+    scrollRevealRefs.current.length = HERO_PARAGRAPHS.length;
+  }
 
   const collageImages = useMemo<CollageImage[]>(() => {
     if (imageFiles.length === 0) return [];
@@ -439,12 +451,13 @@ export default function Home() {
     }}>
       {/* Hero Section - Entry Text + Paragraphs */}
       <section className="hero-section w-full flex items-center justify-center" style={{ 
-        minHeight: 'min(100vh, 900px)',
-        padding: 'clamp(36px, 10vh, 140px) 0',
+        minHeight: 'max(100svh, 720px)',
+        padding: 'clamp(24px, 8vh, 80px) 0 clamp(32px, 7vh, 96px)',
         scrollSnapAlign: 'start',
         scrollSnapStop: 'always',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'flex-start',
+        justifyContent: 'center'
       }}>
         <div
           className="hero-shell w-full px-6 md:px-12"
@@ -454,8 +467,9 @@ export default function Home() {
             zIndex: 1,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            gap: 'clamp(24px, 3vh, 40px)'
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            gap: 'clamp(20px, 3vh, 36px)'
           }}
         >
   {/* Hero Title */}
@@ -465,47 +479,36 @@ export default function Home() {
         </h1>
 
     {/* Three Column Layout */}
-    <div className="hero-grid grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 items-start">
-          {/* Column 1 - Longest */}
-          <div
-            className="space-y-8 text-left scroll-reveal"
-            data-speed="0.18"
-            style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}
-            ref={(el) => {
-              scrollRevealRefs.current[0] = el;
-            }}
-          >
-            <p>
-              Sinds 2020 run ik TREEN, waar ik organisaties, teams en individuele professionals begeleid in persoonlijk leiderschap, communicatie, gedrag en samenwerking. Daarvoor werkte ik meer dan tien jaar als trainer, coach en adviseur bij onder andere Spraakwater, Zuidema, LinQue Consult en Teylingereind. Die brede achtergrond — van zorg en onderwijs tot overheid en bedrijfsleven — vormt de solide basis onder mijn aanpak.
-            </p>
-          </div>
-
-          {/* Column 2 - Medium */}
-          <div
-            className="space-y-8 text-left scroll-reveal"
-            data-speed="0.12"
-            style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}
-            ref={(el) => {
-              scrollRevealRefs.current[1] = el;
-            }}
-          >
-            <p>
-              Mijn stijl is nuchter, warm en altijd gericht op wat er écht gebeurt in de groep. Ik creëer een open en veilige sfeer waarin mensen durven experimenteren, hun eigen patronen leren herkennen en stappen zetten die blijven hangen. Praktisch waar het moet, verdiepend waar het kan — altijd met aandacht voor de balans tussen individuele groei en groepsdynamiek.
-            </p>
-          </div>
-
-          {/* Column 3 - Shortest */}
-          <div
-            className="space-y-8 text-left scroll-reveal"
-            data-speed="0.2"
-            style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}
-            ref={(el) => {
-              scrollRevealRefs.current[2] = el;
-            }}
-          >
-            <p>
-              Ik werk met teams en professionals die willen groeien, die met meer lef én meer bewustzijn willen samenwerken, en daarbij iemand zoeken die scherpte en veiligheid moeiteloos weet te combineren. Iemand die beweging brengt zonder de mens uit het oog te verliezen.
-            </p>
+        <div
+          className="hero-grid"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'clamp(18px, 3vh, 28px)'
+          }}
+        >
+          {HERO_PARAGRAPHS.map((paragraph, idx) => {
+            const speed = HERO_REVEAL_SPEEDS[idx] ?? HERO_REVEAL_SPEEDS[HERO_REVEAL_SPEEDS.length - 1];
+            return (
+              <div
+                key={`hero-paragraph-${idx}`}
+                className="space-y-4 text-left scroll-reveal"
+                data-speed={speed}
+                style={{
+                  color: '#808080',
+                  lineHeight: '1.6em',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word'
+                }}
+                ref={(el) => {
+                  scrollRevealRefs.current[idx] = el;
+                }}
+              >
+                <p>{paragraph}</p>
+              </div>
+            );
+          })}
+          <div className="signature-stack" style={{ marginTop: 'clamp(12px, 2vh, 24px)' }}>
             <div className="mobile-signature">
               <Image
                 src="/signature.png"
@@ -516,7 +519,7 @@ export default function Home() {
                 priority
               />
             </div>
-            <div className="pt-6 md:pt-4 flex md:justify-end">
+            <div className="pt-6 md:pt-4 flex md:justify-start">
               <div className="w-48 md:w-64" style={{ maxWidth: '260px' }}>
                 <div
                   ref={signatureRef}
