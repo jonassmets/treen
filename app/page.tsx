@@ -50,12 +50,6 @@ const HERO_PARAGRAPHS = [
   'Mijn stijl is nuchter, warm en altijd gericht op wat er écht gebeurt in de groep. Ik creëer een open, ontspannen en veilig speelveld waarin alles bespreekbaar wordt. Wat op tafel moet komen, komt op tafel. In die setting durven mensen te experimenteren, hun patronen te herkennen en stappen te zetten die blijven hangen. Praktisch waar het moet, verdiepend waar het kan — altijd in balans tussen individuele groei en groepsdynamiek.',
   'Ik werk met teams en professionals die willen groeien en die willen samenwerken met meer lef en bewustzijn. Zij zoeken iemand die scherpte en veiligheid moeiteloos kan combineren; iemand die beweging brengt zonder de mens uit het oog te verliezen. Dat is precies waar ik op mijn best ben: soepel, kwetsbaar en vanzelfsprekend, vanuit vertrouwen.',
 ] as const;
-const HERO_REVEAL_SPEEDS = [0.18, 0.14, 0.2] as const;
-const HERO_COLUMN_CONTENT = [
-  [0],
-  [1],
-  [2, 3],
-] as const;
 
 const IMAGE_FOLDER = '/image%20section';
 
@@ -81,10 +75,6 @@ export default function Home() {
   const mobileDriftFrameRef = useRef<number | null>(null);
   const signatureFrameRef = useRef<number | null>(null);
   const signatureBaseScrollRef = useRef<number | null>(null);
-
-  if (scrollRevealRefs.current.length !== HERO_COLUMN_CONTENT.length) {
-    scrollRevealRefs.current.length = HERO_COLUMN_CONTENT.length;
-  }
 
   const collageImages = useMemo<CollageImage[]>(() => {
     if (imageFiles.length === 0) return [];
@@ -484,57 +474,42 @@ export default function Home() {
         </h1>
 
     {/* Three Column Layout */}
-        <div className="hero-grid grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 items-start">
-          {HERO_COLUMN_CONTENT.map((columnParagraphs, columnIdx) => {
-            const speed = HERO_REVEAL_SPEEDS[columnIdx] ?? HERO_REVEAL_SPEEDS[HERO_REVEAL_SPEEDS.length - 1];
-            return (
-              <div
-                key={`hero-column-${columnIdx}`}
-                className="space-y-6 text-left scroll-reveal"
-                data-speed={speed}
-                style={{ color: '#808080', lineHeight: '1.6em', wordWrap: 'break-word', overflowWrap: 'break-word' }}
-                ref={(el) => {
-                  scrollRevealRefs.current[columnIdx] = el;
-                }}
-              >
-                {columnParagraphs.map((paragraphIndex) => (
-                  <p key={`hero-paragraph-${paragraphIndex}`}>{HERO_PARAGRAPHS[paragraphIndex]}</p>
-                ))}
-                {columnIdx === HERO_COLUMN_CONTENT.length - 1 && (
-                  <>
-                    <div className="mobile-signature">
-                      <Image
-                        src="/signature.png"
-                        alt="Handtekening van Joris"
-                        width={256}
-                        height={120}
-                        style={{ width: '100%', height: 'auto', display: 'block' }}
-                        priority
-                      />
-                    </div>
-                    <div className="pt-6 md:pt-4 flex md:justify-end">
-                      <div className="w-48 md:w-64" style={{ maxWidth: '260px' }}>
-                        <div
-                          ref={signatureRef}
-                          className="signature-container"
-                          style={{ width: '100%' }}
-                        >
-                          <Image
-                            src="/signature.png"
-                            alt="Handtekening van Joris"
-                            width={256}
-                            height={120}
-                            priority
-                            style={{ width: '100%', height: 'auto', display: 'block' }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
+        <div className="hero-columns-wrapper">
+          <div className="hero-columns scroll-reveal" data-speed="0.16" ref={(el) => { scrollRevealRefs.current[0] = el; }}>
+            {HERO_PARAGRAPHS.map((paragraph, idx) => (
+              <p key={`hero-paragraph-${idx}`} className="hero-paragraph">{paragraph}</p>
+            ))}
+          </div>
+          <div className="signature-stack" style={{ marginTop: 'clamp(16px, 2.5vh, 32px)' }}>
+            <div className="mobile-signature">
+              <Image
+                src="/signature.png"
+                alt="Handtekening van Joris"
+                width={256}
+                height={120}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+                priority
+              />
+            </div>
+            <div className="pt-6 md:pt-4 flex md:justify-end">
+              <div className="w-48 md:w-64" style={{ maxWidth: '260px' }}>
+                <div
+                  ref={signatureRef}
+                  className="signature-container"
+                  style={{ width: '100%' }}
+                >
+                  <Image
+                    src="/signature.png"
+                    alt="Handtekening van Joris"
+                    width={256}
+                    height={120}
+                    priority
+                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                  />
+                </div>
               </div>
-            );
-          })}
+            </div>
+          </div>
         </div>
         </div>
       </section>

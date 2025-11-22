@@ -130,6 +130,28 @@ body {
   scroll-snap-stop: always;
 }
 
+.hero-columns-wrapper {
+  width: 100%;
+}
+
+.hero-columns {
+  column-count: 3;
+  column-gap: clamp(40px, 5vw, 80px);
+  column-fill: balance;
+}
+
+.hero-paragraph {
+  font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+  line-height: 1.55;
+  color: #4d4d4d;
+  margin-bottom: clamp(18px, 2vh, 24px);
+  break-inside: avoid-column;
+}
+
+.hero-paragraph:last-child {
+  margin-bottom: 0;
+}
+
 .hero-grid p {
   font-size: clamp(1.05rem, 1.3vw, 1.35rem);
   line-height: 1.55;
@@ -285,7 +307,7 @@ body {
   .hero-section {
     min-height: 100vh !important;
     height: auto !important;
-    padding: calc(env(safe-area-inset-top, 0px) + 6px) 0 18px;
+    padding: calc(env(safe-area-inset-top, 0px) + 2px) 0 18px;
     align-items: flex-start !important;
     justify-content: flex-start !important;
   }
@@ -293,34 +315,27 @@ body {
   .hero-shell {
     height: auto;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 16px;
   }
 
   .hero-title {
     font-size: clamp(5rem, 13vw, 6.8rem) !important;
     line-height: 1.25 !important;
-    margin-bottom: 18px !important;
+    margin-bottom: 14px !important;
     max-width: 20ch;
     text-align: left;
     margin-inline: 0;
   }
 
-  .hero-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
+  .hero-columns {
+    column-count: 1;
+    column-gap: 0;
   }
 
-  .hero-grid > div {
-    max-width: 52ch;
-    margin-inline: 0;
-  }
-
-  .hero-grid p {
+  .hero-paragraph {
     font-size: clamp(1.5rem, 5vw, 1.6rem);
     line-height: 1.35;
-    color: #4d4d4d;
-    margin-inline: 0;
+    margin-bottom: 22px;
   }
 
   .hero-grid .scroll-reveal {
@@ -340,10 +355,6 @@ body {
 
   .hero-grid .scroll-reveal:nth-of-type(3) {
     transition-delay: 0.2s;
-  }
-
-  .hero-grid .space-y-8 > * + * {
-    margin-top: 1.4rem;
   }
 
   .signature-container {
@@ -441,8 +452,8 @@ body {
     margin-top: 0;
     padding: 32px 0 calc(env(safe-area-inset-bottom, 0px) + 32px);
     background-color: #ffffff;
-    justify-content: center !important;
-    align-items: center !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
     text-align: center;
     display: flex;
   }
@@ -453,6 +464,11 @@ body {
     margin-bottom: 18px !important;
     max-width: 52ch;
     text-align: center;
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 8px);
+    background-color: #ffffff;
+    padding-bottom: 12px;
+    z-index: 10;
   }
 
   .contact-form {
