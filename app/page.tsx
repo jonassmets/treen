@@ -479,7 +479,7 @@ export default function Home() {
               <p key={`hero-paragraph-${idx}`} className="hero-paragraph">{paragraph}</p>
             ))}
           </div>
-          <div className="signature-stack" style={{ marginTop: 'clamp(16px, 2.5vh, 32px)' }}>
+          <div className="signature-stack" style={{ marginTop: 'clamp(12px, 1.5vh, 20px)' }}>
             <div className="mobile-signature">
               <Image
                 src="/signature.png"
@@ -490,8 +490,8 @@ export default function Home() {
                 priority
               />
             </div>
-            <div className="pt-6 md:pt-4 flex md:justify-end">
-              <div className="w-48 md:w-64" style={{ maxWidth: '260px' }}>
+            <div className="pt-4 md:pt-3 flex md:justify-end">
+              <div className="w-40 md:w-52" style={{ maxWidth: '220px' }}>
                 <div
                   ref={signatureRef}
                   className="signature-container"

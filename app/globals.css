@@ -118,9 +118,9 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(3.4rem, 5.5vw, 5.8rem);
-  line-height: 1.08;
-  margin-bottom: clamp(2.25rem, 4vw, 4.5rem);
+  font-size: clamp(2.8rem, 4.2vw, 4.6rem);
+  line-height: 1.15;
+  margin-bottom: clamp(1.5rem, 2.5vh, 2.8rem);
 }
 
 .hero-section,
@@ -136,15 +136,15 @@ body {
 
 .hero-columns {
   column-count: 3;
-  column-gap: clamp(40px, 5vw, 80px);
+  column-gap: clamp(32px, 4vw, 60px);
   column-fill: balance;
 }
 
 .hero-paragraph {
-  font-size: clamp(1.05rem, 1.3vw, 1.35rem);
-  line-height: 1.55;
+  font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+  line-height: 1.5;
   color: #4d4d4d;
-  margin-bottom: clamp(18px, 2vh, 24px);
+  margin-bottom: clamp(14px, 1.5vh, 18px);
   break-inside: avoid-column;
 }
 
@@ -204,25 +204,22 @@ body {
   .hero-section,
   .profile-section,
   .contact-section {
-    padding-block: clamp(32px, 8vh, 80px);
+    padding-block: clamp(24px, 6vh, 60px);
   }
 
   .hero-title {
-    font-size: clamp(2.6rem, 3.6vw, 4.8rem);
-    margin-bottom: clamp(1.25rem, 2.6vh, 2.8rem);
+    font-size: clamp(2.2rem, 3.2vw, 3.8rem);
+    margin-bottom: clamp(1rem, 2vh, 2rem);
   }
 
   .hero-shell {
-    gap: clamp(20px, 2.2vh, 30px);
+    gap: clamp(16px, 1.8vh, 24px);
   }
 
-  .hero-grid {
-    gap: clamp(14px, 2vh, 22px);
-  }
-
-  .hero-grid p {
-    font-size: clamp(0.95rem, 1.05vw, 1.2rem);
-    line-height: 1.45;
+  .hero-paragraph {
+    font-size: clamp(0.88rem, 0.95vw, 1.05rem);
+    line-height: 1.42;
+    margin-bottom: clamp(10px, 1.2vh, 14px);
   }
 
   .mobile-signature {
