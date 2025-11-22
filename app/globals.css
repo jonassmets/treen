@@ -130,12 +130,6 @@ body {
   scroll-snap-stop: always;
 }
 
-.hero-grid {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(18px, 3vh, 30px);
-}
-
 .hero-grid p {
   font-size: clamp(1.05rem, 1.3vw, 1.35rem);
   line-height: 1.55;
