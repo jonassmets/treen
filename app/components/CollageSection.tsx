@@ -16,12 +16,12 @@ type CollageImage = CollageLayout & {
 };
 
 const COLLAGE_LAYOUTS: CollageLayout[] = [
-    { size: 620, top: '0vh', speedFactor: 0.8, offset: 10 },
-    { size: 580, top: '80vh', speedFactor: 0.4, offset: 50 },
-    { size: 560, top: '180vh', speedFactor: 0.2, offset: 30 },
-    { size: 680, top: '111vh', speedFactor: 0.7, offset: 70 },
-    { size: 540, top: '230vh', speedFactor: 0.55, offset: 20 },
-    { size: 200, top: '160vh', speedFactor: 0.1, offset: 10 },
+    { size: 720, top: '0vh', speedFactor: 0.8, offset: 10 },
+    { size: 680, top: '80vh', speedFactor: 0.4, offset: 50 },
+    { size: 650, top: '180vh', speedFactor: 0.2, offset: 30 },
+    { size: 780, top: '111vh', speedFactor: 0.7, offset: 70 },
+    { size: 620, top: '230vh', speedFactor: 0.55, offset: 20 },
+    { size: 280, top: '160vh', speedFactor: 0.1, offset: 10 },
 ];
 
 const ENTRY_Y_OFFSETS = [0.42, 0.22, 0.08, -0.04, 0.15, 0];
@@ -261,7 +261,7 @@ export function CollageSection() {
                     className="float-item"
                     style={
                         {
-                            '--size': `${img.size}px`,
+                            '--size': `max(${img.size}px, ${img.size / 14}vw)`,
                             '--top': img.top,
                         } as CSSProperties
                     }
