@@ -12,6 +12,7 @@ const HERO_PARAGRAPHS = [
 export function HeroSection() {
   const signatureRef = useRef<HTMLDivElement | null>(null);
   const scrollRevealRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const paragraphRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const signatureFrameRef = useRef<number | null>(null);
   const signatureBaseScrollRef = useRef<number | null>(null);
 
@@ -94,73 +95,134 @@ export function HeroSection() {
     };
   }, []);
 
-  return (
-    <section className="hero-section w-full flex items-center justify-center" style={{
-      minHeight: 'max(100svh, 720px)',
-      padding: 'clamp(32px, 5vh, 60px) 0',
-      scrollSnapAlign: 'start',
-      scrollSnapStop: 'always',
-      display: 'flex'
-    }}>
-      <div
-        className="hero-shell w-full px-6 md:px-12"
-        style={{
-          margin: 'auto',
-          maxWidth: '979px',
-          position: 'relative',
-          zIndex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start',
-          gap: 'clamp(24px, 3.5vh, 40px)'
-        }}
-      >
-        {/* Hero Title */}
-        <h1 className="hero-title font-bold text-gray-900 text-left" style={{ fontWeight: 700 }}>
-          Fijn dat je hier bent.<br />
-          Ik help mensen en teams groeien door helderheid, humor en écht contact.
-        </h1>
+  useEffect(() => {
+    // Mobile paragraph lazy-load animation
+    if (typeof window === 'undefined' || window.innerWidth > 768) return;
 
-        {/* Three Column Layout */}
-        <div className="hero-columns-wrapper">
-          <div className="hero-columns scroll-reveal" data-speed="0.16" ref={(el) => { scrollRevealRefs.current[0] = el; }}>
-            {HERO_PARAGRAPHS.map((paragraph, idx) => (
-              <p key={`hero-paragraph-${idx}`} className="hero-paragraph">{paragraph}</p>
-            ))}
-            <div className="signature-stack">
-              <div className="mobile-signature">
-                <Image
-                  src="/signature.png"
-                  alt="Handtekening van Joris"
-                  width={256}
-                  height={120}
-                  style={{ width: '100%', height: 'auto', display: 'block' }}
-                  priority
-                />
-              </div>
-              <div className="pt-2 md:pt-2 mt-12 flex md:justify-start">
-                <div className="w-44 md:w-56" style={{ maxWidth: '240px' }}>
-                  <div
-                    ref={signatureRef}
-                    className="signature-container"
-                    style={{ width: '100%' }}
-                  >
-                    <Image
-                      src="/signature.png"
-                      alt="Handtekening van Joris"
-                      width={256}
-                      height={120}
-                      priority
-                      style={{ width: '100%', height: 'auto', display: 'block' }}
-                    />
+    const paragraphs = paragraphRefs.current.filter((el): el is HTMLParagraphElement => Boolean(el));
+    if (paragraphs.length === 0) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    paragraphs.forEach((el) => observer.observe(el));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <>
+      <section className="hero-section w-full flex items-center justify-center" style={{
+        minHeight: 'max(100svh, 720px)',
+        padding: 'clamp(32px, 5vh, 60px) 0',
+        scrollSnapAlign: 'start',
+        scrollSnapStop: 'always',
+        display: 'flex'
+      }}>
+        <div
+          className="hero-shell w-full px-6 md:px-12"
+          style={{
+            margin: 'auto',
+            maxWidth: '979px',
+            position: 'relative',
+            zIndex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            gap: 'clamp(24px, 3.5vh, 40px)'
+          }}
+        >
+          {/* Hero Title - Fullscreen on mobile */}
+          <h1 className="hero-title font-bold text-gray-900 text-left" style={{ fontWeight: 700 }}>
+            Fijn dat je hier bent.<br />
+            <span className="hero-tagline-second-line">
+              Ik help mensen en teams groeien door helderheid, humor en écht contact.
+            </span>
+          </h1>
+
+          {/* Paragraphs - Hidden initially on mobile */}
+          <div className="hero-columns-wrapper">
+            <div className="hero-columns scroll-reveal" data-speed="0.16" ref={(el) => { scrollRevealRefs.current[0] = el; }}>
+              {HERO_PARAGRAPHS.map((paragraph, idx) => (
+                <p
+                  key={`hero-paragraph-${idx}`}
+                  className="hero-paragraph"
+                >{paragraph}</p>
+              ))}
+              <div className="signature-stack">
+                <div className="mobile-signature mobile-hidden">
+                  <Image
+                    src="/signature.png"
+                    alt="Handtekening van Joris"
+                    width={256}
+                    height={120}
+                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                    priority
+                  />
+                </div>
+                <div className="pt-2 md:pt-2 mt-12 flex md:justify-start">
+                  <div className="w-44 md:w-56" style={{ maxWidth: '240px' }}>
+                    <div
+                      ref={signatureRef}
+                      className="signature-container"
+                      style={{ width: '100%' }}
+                    >
+                      <Image
+                        src="/signature.png"
+                        alt="Handtekening van Joris"
+                        width={256}
+                        height={120}
+                        priority
+                        style={{ width: '100%', height: 'auto', display: 'block' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Mobile-only paragraph section */}
+      <section
+        className="mobile-paragraph-section w-full"
+        style={{
+          scrollSnapAlign: 'start',
+          scrollSnapStop: 'always'
+        }}
+      >
+        <div className="w-full px-6" style={{ maxWidth: '979px', margin: '0 auto', paddingTop: '48px', paddingBottom: '48px' }}>
+          {HERO_PARAGRAPHS.map((paragraph, idx) => (
+            <p
+              key={`mobile-paragraph-${idx}`}
+              className="hero-paragraph mobile-lazy-paragraph"
+              ref={(el) => { paragraphRefs.current[idx] = el; }}
+            >{paragraph}</p>
+          ))}
+          <div className="mobile-signature" style={{ marginTop: '-20px' }}>
+            <Image
+              src="/signature.png"
+              alt="Handtekening van Joris"
+              width={256}
+              height={120}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+              priority
+            />
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

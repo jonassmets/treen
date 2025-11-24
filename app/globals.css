@@ -95,6 +95,14 @@ body {
   background: white;
 }
 
+.mobile-paragraph-section {
+  display: none;
+}
+
+.mobile-hidden {
+  display: none;
+}
+
 .float-item {
   position: absolute;
   left: 0;
@@ -192,6 +200,10 @@ body {
 }
 
 @media (min-width: 769px) {
+
+  .mobile-paragraph-section {
+    display: none !important;
+  }
 
   .hero-section,
   .profile-section,
@@ -316,25 +328,46 @@ body {
 
   .hero-section {
     min-height: 100vh !important;
-    height: auto !important;
-    padding: 24px 0;
-    align-items: flex-start !important;
+    height: 100vh !important;
+    padding: 0;
+    align-items: center !important;
     justify-content: flex-start !important;
+    overflow: hidden;
   }
 
   .hero-shell {
-    height: auto;
-    justify-content: flex-start;
-    gap: 16px;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   .hero-title {
-    font-size: clamp(5rem, 13vw, 6.8rem) !important;
-    line-height: 1.25 !important;
-    margin-bottom: 14px !important;
-    max-width: 20ch;
+    font-size: clamp(3.5rem, 12vw, 7rem) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 0 !important;
+    max-width: 100%;
     text-align: left;
     margin-inline: 0;
+    padding: 0 !important;
+  }
+
+  .hero-tagline-second-line {
+    display: inline;
+  }
+
+  .hero-columns-wrapper {
+    display: none;
+  }
+
+  .mobile-paragraph-section {
+    display: block !important;
+    min-height: 100vh;
+    background: #ffffff;
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 
   .hero-columns {
@@ -346,6 +379,29 @@ body {
     font-size: clamp(1.4rem, 4.5vw, 1.6rem);
     line-height: 1.35;
     margin-bottom: 22px;
+  }
+
+  .mobile-lazy-paragraph {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+    transition: opacity 0.6s ease, transform 0.8s ease;
+  }
+
+  .mobile-lazy-paragraph.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .mobile-lazy-paragraph:nth-of-type(1).is-visible {
+    transition-delay: 0s;
+  }
+
+  .mobile-lazy-paragraph:nth-of-type(2).is-visible {
+    transition-delay: 0.15s;
+  }
+
+  .mobile-lazy-paragraph:nth-of-type(3).is-visible {
+    transition-delay: 0.3s;
   }
 
   .hero-grid .scroll-reveal {
@@ -474,9 +530,10 @@ body {
     margin-bottom: 18px !important;
     max-width: 52ch;
     text-align: center;
-    position: sticky;
-    top: calc(env(safe-area-inset-top, 0px) + 8px);
+    position: sticky !important;
+    top: 0 !important;
     background-color: #ffffff;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
     padding-bottom: 12px;
     z-index: 10;
   }
