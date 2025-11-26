@@ -150,6 +150,7 @@ body {
   column-count: 3;
   column-gap: clamp(32px, 4vw, 60px);
   column-fill: auto;
+  /* Deployment: 2025-11-26 - Force 3 column layout */
 }
 
 .hero-paragraph {
