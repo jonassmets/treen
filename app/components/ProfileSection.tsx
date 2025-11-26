@@ -26,35 +26,47 @@ export function ProfileSection({ accentColor }: ProfileSectionProps) {
                         <Image
                             src="/profile.jpg"
                             alt="Joris van den Hout"
-                            width={280}
-                            height={350}
+                            width={320}
+                            height={400}
                             className="rounded-lg"
+                            style={{ borderRadius: '12px' }}
                         />
                     </div>
                     <div className="flex-1 text-left">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-6">Joris van den Hout</h2>
-                        <p className="text-gray-600 mb-8">
+                        <h2 style={{
+                            fontSize: '29px',
+                            lineHeight: '37.7px',
+                            fontWeight: 400,
+                            color: '#1a1a1a',
+                            marginBottom: '16px'
+                        }}>Joris van den Hout</h2>
+                        <p style={{
+                            fontSize: '20px',
+                            lineHeight: '32px',
+                            color: '#4d4d4d',
+                            marginBottom: '32px'
+                        }}>
                             Trainer - Facilitator - Adviseur
                         </p>
                         <div className="space-y-2 mb-8">
-                            <p className="text-gray-600">
+                            <p style={{ fontSize: '20px', lineHeight: '32px', color: '#4d4d4d' }}>
                                 <a
                                     href="tel:+31642005580"
                                     className="transition-colors"
-                                    style={{ color: '#808080' }}
+                                    style={{ color: '#4d4d4d' }}
                                     onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = '#808080'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = '#4d4d4d'}
                                 >
                                     +31 6 42 00 55 80
                                 </a>
                             </p>
-                            <p className="text-gray-600">
+                            <p style={{ fontSize: '20px', lineHeight: '32px', color: '#4d4d4d' }}>
                                 <a
                                     href="mailto:joris@treen.nu"
                                     className="underline transition-colors"
-                                    style={{ color: '#808080' }}
+                                    style={{ color: '#4d4d4d' }}
                                     onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = '#808080'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = '#4d4d4d'}
                                 >
                                     joris@treen.nu
                                 </a>
@@ -65,7 +77,11 @@ export function ProfileSection({ accentColor }: ProfileSectionProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="underline transition-colors"
-                            style={{ color: '#1a1a1a' }}
+                            style={{
+                                fontSize: '20px',
+                                lineHeight: '32px',
+                                color: '#1a1a1a'
+                            }}
                             onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
                             onMouseLeave={(e) => e.currentTarget.style.color = '#1a1a1a'}
                         >
