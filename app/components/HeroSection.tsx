@@ -151,7 +151,7 @@ export function HeroSection() {
           }}
         >
           {/* Hero Title - Large Derek-style opening */}
-          <h1 className="hero-title font-normal text-gray-900 text-left" style={{ fontWeight: 400 }}>
+          <h1 className="hero-title font-normal text-gray-900 text-left" style={{ fontWeight: 700 }}>
             Fijn dat je hier bent.<br />
             Ik help mensen en teams groeien door helderheid, humor en écht contact.
           </h1>
@@ -167,14 +167,14 @@ export function HeroSection() {
                   <Image
                     src="/signature.png"
                     alt="Handtekening van Joris"
-                    width={256}
-                    height={120}
+                    width={307}
+                    height={144}
                     style={{ width: '100%', height: 'auto', display: 'block' }}
                     priority
                   />
                 </div>
                 <div className="pt-2 md:pt-2 mt-12 flex md:justify-start">
-                  <div className="w-44 md:w-56" style={{ maxWidth: '240px' }}>
+                  <div className="w-52 md:w-72" style={{ maxWidth: '300px' }}>
                     <div
                       ref={signatureRef}
                       className="signature-container"
@@ -183,8 +183,8 @@ export function HeroSection() {
                       <Image
                         src="/signature.png"
                         alt="Handtekening van Joris"
-                        width={256}
-                        height={120}
+                        width={307}
+                        height={144}
                         priority
                         style={{ width: '100%', height: 'auto', display: 'block' }}
                       />
