@@ -127,11 +127,14 @@ body {
 }
 
 .hero-title {
+  font-family: Helvetica, Arial, sans-serif;
   font-size: clamp(42px, 5vw, 70px);
-  line-height: 1.1;
+  /* Keep clamp for mobile safety, max 70px */
+  line-height: 1.1em;
   margin-bottom: clamp(1.8rem, 3vh, 3.2rem);
   text-align: left;
-  font-weight: 400;
+  font-weight: 700;
+  /* Bold */
   color: #1a1a1a;
 }
 
@@ -155,9 +158,11 @@ body {
 }
 
 .hero-paragraph {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: clamp(1.1rem, 1.8vw, 20px);
-  line-height: 1.6;
+  font-family: 'helvetica-w01-roman', Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1.6em;
+  font-weight: 400;
+  /* Normal */
   color: #555555;
   margin-bottom: 0;
 }
@@ -276,8 +281,8 @@ body {
 
   .hero-title {
     font-size: 56px;
-    /* Match Derek's large mobile type */
-    line-height: 1.1;
+    /* Keep large on mobile as requested */
+    line-height: 1.1em;
   }
 
   :root {

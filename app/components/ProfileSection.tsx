@@ -29,13 +29,17 @@ export function ProfileSection({ accentColor }: ProfileSectionProps) {
                             width={320}
                             height={400}
                             className="rounded-lg"
-                            style={{ borderRadius: '12px' }}
+                            style={{
+                                borderRadius: 'calc(var(--sizeRd, var(--rd, 5px)) - var(--sizeBrw, var(--brw, 2px)))',
+                                '--rd': '14px', /* Defining vars to ensure it works nicely */
+                                '--brw': '2px'
+                            } as React.CSSProperties}
                         />
                     </div>
                     <div className="flex-1 text-left">
                         <h2 style={{
                             fontSize: '29px',
-                            lineHeight: '37.7px',
+                            lineHeight: '1.3em',
                             fontWeight: 400,
                             color: '#1a1a1a',
                             marginBottom: '16px'
