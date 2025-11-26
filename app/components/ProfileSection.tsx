@@ -26,8 +26,8 @@ export function ProfileSection({ accentColor }: ProfileSectionProps) {
                         <Image
                             src="/profile.jpg"
                             alt="Joris van den Hout"
-                            width={320}
-                            height={400}
+                            width={480}
+                            height={600}
                             className="rounded-lg"
                             style={{
                                 borderRadius: 'calc(var(--sizeRd, var(--rd, 5px)) - var(--sizeBrw, var(--brw, 2px)))',

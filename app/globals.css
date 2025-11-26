@@ -172,9 +172,11 @@ body {
 }
 
 .signature-stack {
-  margin-top: clamp(40px, 5vh, 60px);
-  grid-column: 3;
-  /* Place in the 3rd column (under the rightmost paragraph) */
+  margin-top: clamp(20px, 3vh, 30px);
+  /* Reduced margin to move closer to paragraph */
+  grid-column: 3 / 4 !important;
+  /* Force placement in 3rd column */
+  grid-column-start: 3 !important;
 }
 
 .hero-grid p {
